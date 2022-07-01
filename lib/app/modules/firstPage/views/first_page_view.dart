@@ -14,11 +14,22 @@ class FirstPageView extends GetView<FirstPageController> {
         centerTitle: true,
       ),
       body: Center(
-        child: Text(
-          'FirstPageView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+          child: Column(
+        children: const [
+          Text(
+            'FirstPageView is working',
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(
+            'FirstPageView is working2',
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(
+            'FirstPageView is working3',
+            style: TextStyle(fontSize: 20),
+          ),
+        ],
+      )),
     );
   }
 }
