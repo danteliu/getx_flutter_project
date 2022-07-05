@@ -21,7 +21,7 @@ class HomeView extends GetView<HomeController> {
   Widget getPages(int onClickIndex) {
     debugPrint("我是谁:${getNames(onClickIndex)}");
     return [
-      const FirstPageView(),
+      FirstPageView(),
       const FindView(),
       const NewsView(),
       const MineView(),
@@ -35,8 +35,8 @@ class HomeView extends GetView<HomeController> {
         return Scaffold(
           body: getPages(controller.tabarIndex),
           bottomNavigationBar: BottomNavigationBar(
-            unselectedItemColor: Colors.black,
-            selectedItemColor: const Color.fromARGB(255, 71, 5, 5),
+            type: BottomNavigationBarType.fixed,
+            showUnselectedLabels: true,
             onTap: c.changeTabIndex,
             currentIndex: c.tabarIndex,
             // showSelectedLabels: false,
@@ -49,24 +49,28 @@ class HomeView extends GetView<HomeController> {
                 icon: const Icon(
                   Icons.home,
                 ),
+                tooltip: '',
                 label: getNames(0),
               ),
               BottomNavigationBarItem(
                 icon: const Icon(
                   Icons.find_in_page,
                 ),
+                tooltip: '',
                 label: getNames(1),
               ),
               BottomNavigationBarItem(
                 icon: const Icon(
                   Icons.new_label_sharp,
                 ),
+                tooltip: '',
                 label: getNames(2),
               ),
               BottomNavigationBarItem(
                 icon: const Icon(
                   Icons.account_circle_outlined,
                 ),
+                tooltip: '',
                 label: getNames(3),
               ),
             ],

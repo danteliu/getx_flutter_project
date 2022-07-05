@@ -31,7 +31,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FIRST_PAGE,
-      page: () => const FirstPageView(),
+      page: () => FirstPageView(),
       binding: FirstPageBinding(),
     ),
     GetPage(
