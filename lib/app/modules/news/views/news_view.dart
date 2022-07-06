@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
@@ -10,8 +11,17 @@ class NewsView extends GetView<NewsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('NewsView'),
+        title: const Text(
+          '新闻',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: Center(
         child: Text(

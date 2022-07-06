@@ -6,7 +6,20 @@ class FirstPageController extends GetxController {
 
   final count = 0.obs;
   int count1 = 10;
-  var list = ["你好"];
+  var list = [
+    "你好",
+    "我好",
+    "大家好",
+    "随机",
+    "我的大哥",
+    "大兄弟",
+    "你好",
+    "这是我的",
+    "你好啊",
+    "梦醒",
+    "无所谓",
+    "一切"
+  ];
 
   @override
   void onInit() {
