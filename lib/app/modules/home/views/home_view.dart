@@ -19,7 +19,6 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget getPages(int onClickIndex) {
-    debugPrint("我是谁:${getNames(onClickIndex)}");
     return [
       FirstPageView(),
       const FindView(),

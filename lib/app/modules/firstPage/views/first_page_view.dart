@@ -8,12 +8,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../controllers/first_page_controller.dart';
+import 'msg_shwo_view_view.dart';
 
 class FirstPageView extends GetView<FirstPageController> {
   const FirstPageView({Key? key}) : super(key: key);
 
   /// 得到tabs view
-  List<Widget> getTabViews() {
+  List<Widget> getTabViews(BuildContext context) {
     List<Widget> tabs = <Widget>[];
     for (int i = 0; i < controller.list.length; i++) {
       if (i == 0) {
@@ -65,6 +66,8 @@ class FirstPageView extends GetView<FirstPageController> {
             ),
           ),
         );
+      } else if (i == 1) {
+        tabs.add(const MsgShwoViewView());
       } else {
         tabs.add(const Icon(Icons.directions_boat));
       }
@@ -77,21 +80,18 @@ class FirstPageView extends GetView<FirstPageController> {
     List<Widget> items = <Widget>[];
     for (int i = 0; i < controller.list.length; i++) {
       items.add(
-        SizedBox(
-          height: 44,
-          child: Tab(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  controller.list[i],
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
+        Tab(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                controller.list[i],
+                style: const TextStyle(
+                  color: Colors.black,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );
@@ -118,23 +118,26 @@ class FirstPageView extends GetView<FirstPageController> {
           preferredSize: const Size.fromHeight(44), //保持和导航栏一样的高度
           child: Align(
             alignment: Alignment.centerLeft,
-            child: TabBar(
-              controller: controller.tabController,
-              indicatorColor: Colors.black,
-              isScrollable: true,
-              indicatorSize: TabBarIndicatorSize.label,
-              tabs: getTabItems(),
-              onTap: (int i) {
-                // print("$i");
-                // print("$kToolbarHeight");
-              },
+            child: SizedBox(
+              height: 44,
+              child: TabBar(
+                controller: controller.tabController,
+                indicatorColor: Colors.black,
+                isScrollable: true,
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: getTabItems(),
+                onTap: (int i) {
+                  // print("$i");
+                  // print("$kToolbarHeight");
+                },
+              ),
             ),
           ),
         ),
       ),
       body: TabBarView(
         controller: controller.tabController,
-        children: getTabViews(),
+        children: getTabViews(context),
       ),
       // DefaultTabController(
       //   length: controller.list.length,

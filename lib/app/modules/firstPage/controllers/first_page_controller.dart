@@ -30,7 +30,8 @@ class FirstPageController extends GetxController
 
     tabController.addListener(() {
       if (tabController.index == tabController.animation?.value) {
-        print(tabController.index);
+        print(
+            "onClick 第${tabController.index}个,是 ${list[tabController.index]}");
       }
     });
     getDatas();
