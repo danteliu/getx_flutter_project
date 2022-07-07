@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 
-class FirstPageController extends GetxController {
+class FirstPageController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   //TODO: Implement FirstPageController
-
+  late TabController tabController;
   final count = 0.obs;
   int count1 = 10;
   var list = [
@@ -23,8 +25,15 @@ class FirstPageController extends GetxController {
 
   @override
   void onInit() {
-    getDatas();
     super.onInit();
+    tabController = TabController(length: list.length, vsync: this);
+
+    tabController.addListener(() {
+      if (tabController.index == tabController.animation?.value) {
+        print(tabController.index);
+      }
+    });
+    getDatas();
   }
 
   void getDatas() async {

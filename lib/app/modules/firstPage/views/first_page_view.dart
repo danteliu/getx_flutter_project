@@ -101,42 +101,78 @@ class FirstPageView extends GetView<FirstPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: controller.list.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Welcome',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Welcome',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(44), //保持和导航栏一样的高度
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: TabBar(
-                indicatorColor: Colors.black,
-                isScrollable: true,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: getTabItems(),
-                onTap: (int i) {
-                  // print("$i");
-                  // print("$kToolbarHeight");
-                },
-              ),
-            ),
-          ),
-          centerTitle: true,
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
-        body: TabBarView(
-          children: getTabViews(),
+        centerTitle: true,
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(44), //保持和导航栏一样的高度
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: TabBar(
+              controller: controller.tabController,
+              indicatorColor: Colors.black,
+              isScrollable: true,
+              indicatorSize: TabBarIndicatorSize.label,
+              tabs: getTabItems(),
+              onTap: (int i) {
+                // print("$i");
+                // print("$kToolbarHeight");
+              },
+            ),
+          ),
         ),
       ),
+      body: TabBarView(
+        controller: controller.tabController,
+        children: getTabViews(),
+      ),
+      // DefaultTabController(
+      //   length: controller.list.length,
+      //   child: Scaffold(
+      //     appBar: AppBar(
+      //       title: const Text(
+      //         'Welcome',
+      //         style: TextStyle(
+      //           color: Colors.black,
+      //           fontWeight: FontWeight.bold,
+      //         ),
+      //       ),
+      //       bottom: PreferredSize(
+      //         preferredSize: const Size.fromHeight(44), //保持和导航栏一样的高度
+      //         child: Align(
+      //           alignment: Alignment.centerLeft,
+      //           child: TabBar(
+      //             indicatorColor: Colors.black,
+      //             isScrollable: true,
+      //             indicatorSize: TabBarIndicatorSize.label,
+      //             tabs: getTabItems(),
+      //             onTap: (int i) {
+      //               // print("$i");
+      //               // print("$kToolbarHeight");
+      //             },
+      //           ),
+      //         ),
+      //       ),
+      //       centerTitle: true,
+      //       elevation: 0.0,
+      //       backgroundColor: Colors.white,
+      //       systemOverlayStyle: SystemUiOverlayStyle.dark,
+      //     ),
+      //     body: TabBarView(
+      //       children: getTabViews(),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
