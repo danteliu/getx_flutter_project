@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
+import 'package:getx_flutter_project/app/data/baseData.dart';
 
 class FirstPageController extends GetxController
     with GetSingleTickerProviderStateMixin {
+  SettingInfo info = SettingInfo();
   //TODO: Implement FirstPageController
   late TabController tabController;
   final count = 0.obs;
@@ -22,6 +24,7 @@ class FirstPageController extends GetxController
     "无所谓",
     "一切"
   ];
+  List datas = [];
 
   @override
   void onInit() {
@@ -39,9 +42,13 @@ class FirstPageController extends GetxController
 
   void getDatas() async {
     var dio = Dio();
-    final response = await dio.post(
-        'https://www.fastmock.site/mock/81e82bca25efe9ef25af1fe9b1c36a0d/wjmfmiyk/demo');
-    print("打印:${response.data}");
+
+    final response = await dio.post('${info.baseUrl}/newInfoList');
+
+    datas = response.data["lists"];
+    // print("打印的内容: ${datas} count:${datas.length}");
+    update(["datasUpdate"]);
+    print("count:${datas.length}");
   }
 
   @override

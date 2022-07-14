@@ -67,7 +67,7 @@ class FirstPageView extends GetView<FirstPageController> {
           ),
         );
       } else if (i == 1) {
-        tabs.add(const MsgShwoViewView());
+        tabs.add(MsgShwoViewView());
       } else {
         tabs.add(const Icon(Icons.directions_boat));
       }
@@ -120,16 +120,21 @@ class FirstPageView extends GetView<FirstPageController> {
             alignment: Alignment.centerLeft,
             child: SizedBox(
               height: 44,
-              child: TabBar(
-                controller: controller.tabController,
-                indicatorColor: Colors.black,
-                isScrollable: true,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: getTabItems(),
-                onTap: (int i) {
-                  // print("$i");
-                  // print("$kToolbarHeight");
-                },
+              child: Theme(
+                data: ThemeData(
+                  splashColor: const Color.fromARGB(0, 0, 0, 0),
+                ),
+                child: TabBar(
+                  controller: controller.tabController,
+                  indicatorColor: Colors.black,
+                  isScrollable: true,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  tabs: getTabItems(),
+                  onTap: (int i) {
+                    // print("$i");
+                    // print("$kToolbarHeight");
+                  },
+                ),
               ),
             ),
           ),
