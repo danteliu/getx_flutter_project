@@ -8,6 +8,7 @@ abstract class Routes {
   static const FIRST_PAGE = _Paths.FIRST_PAGE;
   static const FIND = _Paths.FIND;
   static const NEWS = _Paths.NEWS;
+  static const MSG_DETAIL_PAGE = _Paths.MSG_DETAIL_PAGE;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const FIRST_PAGE = '/first-page';
   static const FIND = '/find';
   static const NEWS = '/news';
+  static const MSG_DETAIL_PAGE = '/msg-detail-page';
 }

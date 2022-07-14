@@ -5,10 +5,14 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import 'package:get/get.dart';
 import 'package:getx_flutter_project/app/modules/firstPage/controllers/first_page_controller.dart';
+import 'package:getx_flutter_project/app/routes/app_pages.dart';
 
 class MsgShwoViewView extends GetView {
-  MsgShwoViewView({Key? key}) : super(key: key);
+  MsgShwoViewView({
+    Key? key,
+  }) : super(key: key);
   FirstPageController fctrl = Get.find();
+
   Widget getCells(int index) {
     Map obj = fctrl.datas[index];
     String style = obj["style"];
@@ -17,13 +21,20 @@ class MsgShwoViewView extends GetView {
       return MsgStyleFirst(
         obj: obj,
         onClick: () {
-          print("${obj["imgUrl"]}");
+          Get.toNamed(
+            Routes.MSG_DETAIL_PAGE,
+            arguments: obj,
+          );
         },
       );
     } else if (style == "02") {
       return MsgStyleSecond(
         obj: obj,
         onClick: () {
+          Get.toNamed(
+            Routes.MSG_DETAIL_PAGE,
+            arguments: obj,
+          );
           print("${obj["imgUrl"]}");
         },
       );
@@ -118,7 +129,7 @@ class MsgStyleFirst extends GetView {
         children: [
           // ElevatedButton(onPressed: onPressed, child: child)
           Container(
-            clipBehavior: Clip.hardEdge,
+            clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
@@ -126,7 +137,7 @@ class MsgStyleFirst extends GetView {
               ),
             ),
             child: AspectRatio(
-              aspectRatio: 16 / 5,
+              aspectRatio: 16 / 9,
               child: Image.network(
                 obj["imgUrl"],
                 fit: BoxFit.cover,
@@ -211,7 +222,7 @@ class MsgStyleSecond extends GetView {
             Expanded(
               flex: 1,
               child: Container(
-                clipBehavior: Clip.hardEdge,
+                clipBehavior: Clip.antiAlias,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
@@ -313,16 +324,70 @@ class MsgStyleThree extends GetView {
 
   List<Widget> getViews() {
     List<Widget> list = [];
-    for (var i = 0; i < 10; i++) {
-      list.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-            width: 100,
-            height: 100,
-            decoration: const BoxDecoration(
-              color: Colors.red,
-            )),
-      ));
+    List datas = obj["mechanisms"];
+    for (var i = 0; i < datas.length; i++) {
+      Map target = datas[i];
+      list.add(
+        Padding(
+          padding: EdgeInsets.only(
+            right: i == datas.length - 1 ? 0 : 10,
+          ),
+          child: SizedBox(
+            width: 60,
+            // height: 100,
+            // decoration: const BoxDecoration(
+            //   color: Colors.red,
+            // ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.all(6.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(2.0, 3.0), //阴影x轴偏移量
+                        blurRadius: 5, //阴影模糊程度
+                        spreadRadius: 0, //阴影扩散程度
+                      ),
+                    ],
+                  ),
+                  child: ClipOval(
+                    child: Image.network(
+                      target["mechanismImageUrl"],
+                      fit: BoxFit.cover,
+                      width: 46,
+                      height: 46,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        target["mechanismName"],
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: const TextStyle(
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+        ),
+      );
     }
     return list;
   }
@@ -333,8 +398,14 @@ class MsgStyleThree extends GetView {
       onTap: onClick,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Row(
-          children: getViews(),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 10.0,
+            bottom: 10.0,
+          ),
+          child: Row(
+            children: getViews(),
+          ),
         ),
       ),
     );

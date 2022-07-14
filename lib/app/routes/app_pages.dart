@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/MsgDetailPage/bindings/msg_detail_page_binding.dart';
+import '../modules/MsgDetailPage/views/msg_detail_page_view.dart';
 import '../modules/find/bindings/find_binding.dart';
 import '../modules/find/views/find_view.dart';
 import '../modules/firstPage/bindings/first_page_binding.dart';
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.NEWS,
       page: () => const NewsView(),
       binding: NewsBinding(),
+    ),
+    GetPage(
+      name: _Paths.MSG_DETAIL_PAGE,
+      page: () => MsgDetailPageView(),
+      binding: MsgDetailPageBinding(),
     ),
   ];
 }
