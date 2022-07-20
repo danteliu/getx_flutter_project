@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:get/get.dart';
 
@@ -72,15 +75,14 @@ class MsgDetailPageView extends GetView<MsgDetailPageController> {
                 AspectRatio(
                   aspectRatio: 1 / 1,
                   child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Image.network(
-                      datas["imgUrl"],
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: datas["imgUrl"],
+                        fit: BoxFit.cover,
+                      )),
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -117,16 +119,22 @@ class MsgDetailPageView extends GetView<MsgDetailPageController> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: GetBuilder<MsgDetailPageController>(
-                    id: "tags",
-                    builder: (e) {
-                      return Row(
-                        children: getTagsView(),
-                      );
-                    },
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: GetBuilder<MsgDetailPageController>(
+                          id: "tags",
+                          builder: (e) {
+                            return Row(
+                              children: getTagsView(),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 10),
                 GetBuilder<MsgDetailPageController>(
@@ -142,7 +150,126 @@ class MsgDetailPageView extends GetView<MsgDetailPageController> {
                   },
                 ),
                 const SizedBox(height: 10),
+                MsgDetailBottomView(),
+                const SizedBox(height: 10),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MsgDetailBottomView extends GetView {
+  @override
+  MsgDetailPageController controller = Get.find();
+  List<Widget> getViews() {
+    List<Widget> tmp = [];
+    for (var element in controller.categorys) {
+      tmp.add(
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 8.0,
+          ),
+          child: Container(
+            width: 120,
+            // decoration: const BoxDecoration(
+            //   color: Colors.grey,
+            // ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: CachedNetworkImage(
+                      imageUrl: element["img"],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  element["name"],
+                  maxLines: 3,
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                    height: 1.5,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w200,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+    return tmp;
+  }
+
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 255,
+      // decoration: const BoxDecoration(
+      //   color: Colors.red,
+      // ),
+      child: Column(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            height: 40,
+            child: Row(
+              children: const [
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    "更多类型",
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    "全部",
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 10,
+                left: 10,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: GetBuilder<MsgDetailPageController>(
+                        id: "category",
+                        builder: (e) {
+                          return Row(
+                            children: getViews(),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

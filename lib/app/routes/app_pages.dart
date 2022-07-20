@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/CompanyDetailPage/bindings/company_detail_page_binding.dart';
+import '../modules/CompanyDetailPage/views/company_detail_page_view.dart';
 import '../modules/MsgDetailPage/bindings/msg_detail_page_binding.dart';
 import '../modules/MsgDetailPage/views/msg_detail_page_view.dart';
 import '../modules/find/bindings/find_binding.dart';
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.MSG_DETAIL_PAGE,
       page: () => MsgDetailPageView(),
       binding: MsgDetailPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.COMPANY_DETAIL_PAGE,
+      page: () => CompanyDetailPageView(),
+      binding: CompanyDetailPageBinding(),
     ),
   ];
 }

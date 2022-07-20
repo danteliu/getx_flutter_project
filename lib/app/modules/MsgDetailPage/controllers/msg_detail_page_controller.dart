@@ -8,6 +8,7 @@ class MsgDetailPageController extends GetxController {
   String article = "";
   final count = 0.obs;
   List tags = [];
+  List categorys = [];
   @override
   void onInit() {
     super.onInit();
@@ -21,12 +22,9 @@ class MsgDetailPageController extends GetxController {
     final response = await dio.post('${info.baseUrl}/msgDetail');
     article = response.data["article"];
     tags = response.data["tags"];
-    update(["article"]);
-    update(["tags"]);
-    // datas = response.data["lists"];
-    // // print("打印的内容: ${datas} count:${datas.length}");
-    // update(["datasUpdate"]);
-    // print("count:${datas.length}");
+    categorys = response.data["category"];
+
+    update(["article", "tags", "category"]);
   }
 
   @override

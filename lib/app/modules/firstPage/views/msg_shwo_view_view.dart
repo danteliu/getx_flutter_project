@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -41,9 +42,6 @@ class MsgShwoViewView extends GetView {
     } else if (style == "03") {
       return MsgStyleThree(
         obj: obj,
-        onClick: () {
-          print("${obj["imgUrl"]}");
-        },
       );
     } else {
       return Padding(
@@ -138,8 +136,8 @@ class MsgStyleFirst extends GetView {
             ),
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: Image.network(
-                obj["imgUrl"],
+              child: CachedNetworkImage(
+                imageUrl: obj["imgUrl"],
                 fit: BoxFit.cover,
               ),
             ),
@@ -231,8 +229,8 @@ class MsgStyleSecond extends GetView {
                 ),
                 child: AspectRatio(
                   aspectRatio: 1 / 1,
-                  child: Image.network(
-                    obj["imgUrl"],
+                  child: CachedNetworkImage(
+                    imageUrl: obj["imgUrl"],
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -314,12 +312,10 @@ class MsgStyleSecond extends GetView {
 
 class MsgStyleThree extends GetView {
   final Map obj;
-  final GestureTapCallback? onClick;
 
   const MsgStyleThree({
     Key? key,
     required this.obj,
-    this.onClick,
   }) : super(key: key);
 
   List<Widget> getViews() {
@@ -338,52 +334,61 @@ class MsgStyleThree extends GetView {
             // decoration: const BoxDecoration(
             //   color: Colors.red,
             // ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(2.0, 3.0), //阴影x轴偏移量
-                        blurRadius: 5, //阴影模糊程度
-                        spreadRadius: 0, //阴影扩散程度
+            child: InkWell(
+              onTap: () {
+                Get.toNamed(
+                  Routes.COMPANY_DETAIL_PAGE,
+                  arguments: target,
+                );
+                print(target);
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.all(6.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(2.0, 3.0), //阴影x轴偏移量
+                          blurRadius: 5, //阴影模糊程度
+                          spreadRadius: 0, //阴影扩散程度
+                        ),
+                      ],
+                    ),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: target["mechanismImageUrl"],
+                        fit: BoxFit.cover,
+                        width: 46,
+                        height: 46,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          target["mechanismName"],
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            fontSize: 11,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  child: ClipOval(
-                    child: Image.network(
-                      target["mechanismImageUrl"],
-                      fit: BoxFit.cover,
-                      width: 46,
-                      height: 46,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        target["mechanismName"],
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        style: const TextStyle(
-                          fontSize: 11,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-              ],
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
         ),
@@ -394,18 +399,15 @@ class MsgStyleThree extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onClick,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: 10.0,
-            bottom: 10.0,
-          ),
-          child: Row(
-            children: getViews(),
-          ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 10.0,
+          bottom: 10.0,
+        ),
+        child: Row(
+          children: getViews(),
         ),
       ),
     );
