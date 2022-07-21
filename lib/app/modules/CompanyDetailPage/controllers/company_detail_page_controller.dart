@@ -5,11 +5,21 @@ class CompanyDetailPageController extends GetxController {
   //TODO: Implement CompanyDetailPageController
   late PageController p;
   final count = 0.obs;
+
+  int currentIndex = 0;
+  List topTitles = [
+    "Latest",
+    "World",
+    "Business",
+    "Sports",
+    "Lifestyle",
+  ];
+
   @override
   void onInit() {
     super.onInit();
     p = PageController(
-      initialPage: 1,
+      initialPage: 0,
     );
   }
 
@@ -33,7 +43,13 @@ class CompanyDetailPageController extends GetxController {
     );
   }
 
-  jumpToPage() {
-    p.jumpToPage(1);
+  /// 跳转到对应的pageindex页面
+  jumpToPage(int pageIndex) {
+    p.jumpToPage(pageIndex);
+  }
+
+  changeCurrentIndex(int index) {
+    currentIndex = index;
+    update(["updatetitle"]);
   }
 }
