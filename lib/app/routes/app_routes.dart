@@ -10,6 +10,7 @@ abstract class Routes {
   static const NEWS = _Paths.NEWS;
   static const MSG_DETAIL_PAGE = _Paths.MSG_DETAIL_PAGE;
   static const COMPANY_DETAIL_PAGE = _Paths.COMPANY_DETAIL_PAGE;
+  static const LATEST_VIEW_VIEW = _Paths.LATEST_VIEW_VIEW;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const NEWS = '/news';
   static const MSG_DETAIL_PAGE = '/msg-detail-page';
   static const COMPANY_DETAIL_PAGE = '/company-detail-page';
+  static const LATEST_VIEW_VIEW = '/latest-view-view';
 }

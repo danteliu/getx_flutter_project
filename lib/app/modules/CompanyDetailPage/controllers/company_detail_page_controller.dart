@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CompanyDetailPageController extends GetxController {
-  //TODO: Implement CompanyDetailPageController
+  /// 控制pageview的控制器
   late PageController p;
   final count = 0.obs;
 
+  /// 控制详情pageview 和titleview 的位置
   int currentIndex = 0;
+
+  /// 详情需要显示的title数组
   List topTitles = [
     "Latest",
     "World",

@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:getx_flutter_project/app/modules/LatestViewView/views/latest_view_view_view.dart';
 
 import '../controllers/company_detail_page_controller.dart';
 
@@ -23,16 +25,29 @@ class CompanyDetailPageView extends GetView<CompanyDetailPageController> {
             controller.jumpToPage(index);
           },
           child: Container(
+            height: 44,
             color: index == controller.currentIndex
-                ? Colors.blue
-                : Colors.grey[50],
+                ? const Color.fromRGBO(0, 47, 167, 1)
+                : Colors.white,
             padding: const EdgeInsets.only(
-              top: 5,
-              bottom: 5,
+              top: 0,
+              bottom: 0,
               left: 20,
               right: 20,
             ),
-            child: Text(element),
+            child: Center(
+              child: Text(
+                element,
+                style: TextStyle(
+                  color: index == controller.currentIndex
+                      ? Colors.white
+                      : Colors.black,
+                  fontWeight: index == controller.currentIndex
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                ),
+              ),
+            ),
           ),
         ),
       );
@@ -47,16 +62,19 @@ class CompanyDetailPageView extends GetView<CompanyDetailPageController> {
     for (String element in controller.topTitles) {
       // currentIndex
       // int index = controller.topTitles.indexOf(element);
-
-      tmp.add(
-        Center(
-          child: Container(
-            color: Colors.red,
-            padding: const EdgeInsets.all(5),
-            child: Text(element),
+      if (element == "Latest") {
+        tmp.add(LatestViewViewView());
+      } else {
+        tmp.add(
+          Center(
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(5),
+              child: Text(element),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
     return tmp;
   }
@@ -116,9 +134,50 @@ class CompanyDetailPageView extends GetView<CompanyDetailPageController> {
                   child: Column(
                     children: [
                       // const Text("这是我的"),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
-                        height: 44,
+                        height: 100,
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 20),
+                            Container(
+                              padding: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    offset: Offset(2.0, 3.0), //阴影x轴偏移量
+                                    blurRadius: 5, //阴影模糊程度
+                                    spreadRadius: 0, //阴影扩散程度
+                                  ),
+                                ],
+                              ),
+                              child: ClipOval(
+                                child: CachedNetworkImage(
+                                  imageUrl: lastSource["mechanismImageUrl"],
+                                  fit: BoxFit.cover,
+                                  width: 46,
+                                  height: 46,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Text(
+                              lastSource["mechanismName"],
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        // height: 44,
                         child: GetBuilder<CompanyDetailPageController>(
                           id: "updatetitle",
                           builder: (context) {
